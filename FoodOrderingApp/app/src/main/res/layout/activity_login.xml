@@ -70,4 +70,19 @@
         android:text="@string/forgotPassword"
         android:textColor="#ffffff" />
 
+    <Button
+        android:id="@+id/signUp"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/appTheme"
+        android:padding="6dp"
+        android:text="@string/signUp"
+        android:textColor="#ffffff" />
+
 </RelativeLayout>
