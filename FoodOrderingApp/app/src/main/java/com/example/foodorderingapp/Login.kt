@@ -23,8 +23,11 @@ class Login : AppCompatActivity() {
     lateinit var btnLogin: Button
     lateinit var etMobileNumber: EditText
     lateinit var etPassword: EditText
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.userDetails), Context.MODE_PRIVATE)
         setContentView(R.layout.activity_login)
         signUp = findViewById(R.id.signUp)
         forgotPassword = findViewById(R.id.forgotPassword)
@@ -59,6 +62,8 @@ class Login : AppCompatActivity() {
                     try {
                         val success = data.getBoolean("success")
                         if (success) {
+                            val userDetails = data.getJSONObject("data")
+                            saveSharedPreferences(userDetails)
                             Toast.makeText(
                                 this@Login,
                                 "Logged In",
@@ -92,5 +97,14 @@ class Login : AppCompatActivity() {
             }
             queue.add(jsonRequest)
         }
+    }
+
+    fun saveSharedPreferences(userDetails: JSONObject) {
+        sharedPreferences.edit().putString("user_id", userDetails.getString("user_id")).apply()
+        sharedPreferences.edit().putString("name", userDetails.getString("name")).apply()
+        sharedPreferences.edit().putString("email", userDetails.getString("email")).apply()
+        sharedPreferences.edit().putString("mobile_number", userDetails.getString("mobile_number"))
+            .apply()
+        sharedPreferences.edit().putString("address", userDetails.getString("address")).apply()
     }
 }
