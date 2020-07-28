@@ -13,7 +13,11 @@ import com.example.foodorderingapp.R
 import com.example.foodorderingapp.model.Restaurant
 import com.squareup.picasso.Picasso
 
-class HomeRecyclerAdapter(val context: Context, val itemList: ArrayList<Restaurant>) :
+class HomeRecyclerAdapter(
+    val context: Context,
+    val itemList: ArrayList<Restaurant>,
+    var check: ArrayList<Boolean>
+) :
     RecyclerView.Adapter<HomeRecyclerAdapter.HomeViewHolder>() {
     class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtRestaurantName: TextView = view.findViewById(R.id.txtRestaurantName)
@@ -22,6 +26,7 @@ class HomeRecyclerAdapter(val context: Context, val itemList: ArrayList<Restaura
         val txtRestaurantRating: TextView = view.findViewById(R.id.txtRestaurantRating)
         val imgRestaurant: ImageView = view.findViewById(R.id.imgRestaurant)
         val llContent: LinearLayout = view.findViewById(R.id.llContent)
+        val icHeart: TextView = view.findViewById(R.id.icHeart)
     }
 
     override fun onCreateViewHolder(
@@ -48,6 +53,25 @@ class HomeRecyclerAdapter(val context: Context, val itemList: ArrayList<Restaura
         holder.txtRestaurantRating.text = restaurant.restaurantRating
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.app_logo)
             .into(holder.imgRestaurant)
+        holder.icHeart.setOnClickListener {
+            if (check[position]) {
+                holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_heart_outline,
+                    0,
+                    0,
+                    0
+                );
+                check[position] = false
+            } else {
+                holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_heart_filled,
+                    0,
+                    0,
+                    0
+                );
+                check[position] = true
+            }
+        }
 
     }
 }

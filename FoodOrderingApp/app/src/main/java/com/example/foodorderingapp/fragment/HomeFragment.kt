@@ -59,11 +59,15 @@ class HomeFragment : Fragment() {
                                 restaurantJsonObject.getString("image_url")
                             )
                             restaurantInfoList.add(restaurantObject)
-                            recyclerAdapter =
-                                HomeRecyclerAdapter(activity as Context, restaurantInfoList)
-                            recyclerHome.adapter = recyclerAdapter
-                            recyclerHome.layoutManager = layoutManager
                         }
+                        var check = arrayListOf<Boolean>()
+                        for (i in 0 until dataArray.length()) {
+                            check.add(false)
+                        }
+                        recyclerAdapter =
+                            HomeRecyclerAdapter(activity as Context, restaurantInfoList, check)
+                        recyclerHome.adapter = recyclerAdapter
+                        recyclerHome.layoutManager = layoutManager
                     } else {
                         Toast.makeText(
                             activity as Context,
