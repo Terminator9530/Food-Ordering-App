@@ -1,14 +1,19 @@
 package com.example.foodorderingapp.activity
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.foodorderingapp.R
@@ -121,6 +126,20 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Clicked on FAQ's", Toast.LENGTH_SHORT).show()
                 }
                 R.id.logout -> {
+                    drawerLayout.closeDrawers()
+                    val dialog = AlertDialog.Builder(this@MainActivity as Context)
+                    dialog.setTitle("Alert")
+                    dialog.setMessage("Are You Sure You Want To LogOut ?")
+                    dialog.setPositiveButton("Yes") { text, listener ->
+                        val intent = Intent(this@MainActivity, Login::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    dialog.setNegativeButton("No") { text, listener ->
+
+                    }
+                    dialog.create()
+                    dialog.show()
                     Toast.makeText(this@MainActivity, "Clicked on LogOut", Toast.LENGTH_SHORT)
                         .show()
                 }
