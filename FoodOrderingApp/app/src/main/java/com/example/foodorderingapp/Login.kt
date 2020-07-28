@@ -69,6 +69,9 @@ class Login : AppCompatActivity() {
                                 "Logged In",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            val intent = Intent(this@Login, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         } else {
                             val errorMessage = data.getString("errorMessage")
                             Toast.makeText(
