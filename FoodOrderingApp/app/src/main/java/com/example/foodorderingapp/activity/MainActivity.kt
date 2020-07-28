@@ -1,15 +1,16 @@
-package com.example.foodorderingapp
+package com.example.foodorderingapp.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.foodorderingapp.R
+import com.example.foodorderingapp.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         toolBar = findViewById(R.id.toolbar)
         frameLayout = findViewById(R.id.frame)
         navigationView = findViewById(R.id.navigationView)
-        setUpToolbar("All Restaurants")
         openHome()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(
@@ -51,12 +51,14 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> {
                     openHome()
-                    setUpToolbar("All Restaurants")
                     Toast.makeText(this@MainActivity, "Clicked on Home", Toast.LENGTH_SHORT).show()
                 }
                 R.id.profile -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, ProfileFragment())
+                        .replace(
+                            R.id.frame,
+                            ProfileFragment()
+                        )
                         .addToBackStack("Profile")
                         .commit()
                     drawerLayout.closeDrawers()
@@ -66,7 +68,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.favourite -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, FavouriteFragment())
+                        .replace(
+                            R.id.frame,
+                            FavouriteFragment()
+                        )
                         .addToBackStack("Favourite")
                         .commit()
                     drawerLayout.closeDrawers()
@@ -79,7 +84,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.history -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, OrderFragment())
+                        .replace(
+                            R.id.frame,
+                            OrderFragment()
+                        )
                         .addToBackStack("History")
                         .commit()
                     drawerLayout.closeDrawers()
@@ -92,7 +100,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.faq -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, FAQFragment())
+                        .replace(
+                            R.id.frame,
+                            FAQFragment()
+                        )
                         .addToBackStack("FAQ")
                         .commit()
                     drawerLayout.closeDrawers()
@@ -127,9 +138,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(
             R.id.frame,
             HomeFragment()
-        ).addToBackStack("Dashboard").commit()
+        ).addToBackStack("Home").commit()
         drawerLayout.closeDrawers()
-        setUpToolbar("Dashboard")
+        setUpToolbar("All Restaurants")
         navigationView.setCheckedItem(R.id.home)
     }
 

@@ -1,58 +1,43 @@
-package com.example.foodorderingapp
+package com.example.foodorderingapp.activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.foodorderingapp.R
 import org.json.JSONObject
 import java.lang.Exception
 
-class Login : AppCompatActivity() {
-    lateinit var signUp: Button
-    lateinit var forgotPassword: Button
-    lateinit var btnLogin: Button
+class ForgotPassword : AppCompatActivity() {
+    lateinit var btnNext: Button
     lateinit var etMobileNumber: EditText
-    lateinit var etPassword: EditText
+    lateinit var etEmail: EditText
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences =
             getSharedPreferences(getString(R.string.userDetails), Context.MODE_PRIVATE)
-        setContentView(R.layout.activity_login)
-        signUp = findViewById(R.id.signUp)
-        forgotPassword = findViewById(R.id.forgotPassword)
-        btnLogin = findViewById(R.id.btnLogin)
+        setContentView(R.layout.activity_forgot_password)
+        btnNext = findViewById(R.id.btnNext)
         etMobileNumber = findViewById(R.id.etMobileNumber)
-        etPassword = findViewById(R.id.etPassword)
+        etEmail = findViewById(R.id.etEmail)
 
-        signUp.setOnClickListener {
-            val intent = Intent(this@Login, Register::class.java)
-            startActivity(intent)
-        }
-
-        forgotPassword.setOnClickListener {
-            val intent = Intent(this@Login, ForgotPassword::class.java)
-            startActivity(intent)
-        }
-
-        btnLogin.setOnClickListener {
+        btnNext.setOnClickListener {
             val mobile = etMobileNumber.text.toString()
-            val password = etPassword.text.toString()
-            val queue = Volley.newRequestQueue(this@Login)
-            val url = "http://13.235.250.119/v2/login/fetch_result"
+            val email = etEmail.text.toString()
+            val queue = Volley.newRequestQueue(this@ForgotPassword)
+            val url = "http://13.235.250.119/v2/forgot_password/fetch_result"
             val jsonParams = JSONObject()
             jsonParams.put("mobile_number", mobile)
-            jsonParams.put("password", password)
+            jsonParams.put("email", email)
             val jsonRequest = object : JsonObjectRequest(
                 Request.Method.POST, url, jsonParams,
                 Response.Listener {
@@ -62,34 +47,29 @@ class Login : AppCompatActivity() {
                     try {
                         val success = data.getBoolean("success")
                         if (success) {
-                            val userDetails = data.getJSONObject("data")
-                            saveSharedPreferences(userDetails)
-                            Toast.makeText(
-                                this@Login,
-                                "Logged In",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this@Login, MainActivity::class.java)
+                            sharedPreferences.edit().putString("mobile", mobile).apply()
+                            val intent = Intent(this@ForgotPassword, OTP::class.java)
                             startActivity(intent)
                             finish()
                         } else {
                             val errorMessage = data.getString("errorMessage")
                             Toast.makeText(
-                                this@Login,
+                                this@ForgotPassword,
                                 errorMessage,
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     } catch (e: Exception) {
                         Toast.makeText(
-                            this@Login,
+                            this@ForgotPassword,
                             "Some unexpected error occured",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 },
                 Response.ErrorListener {
-                    Toast.makeText(this@Login, "volley error occured", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ForgotPassword, "volley error occured", Toast.LENGTH_SHORT)
+                        .show()
                 }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
@@ -100,14 +80,5 @@ class Login : AppCompatActivity() {
             }
             queue.add(jsonRequest)
         }
-    }
-
-    fun saveSharedPreferences(userDetails: JSONObject) {
-        sharedPreferences.edit().putString("user_id", userDetails.getString("user_id")).apply()
-        sharedPreferences.edit().putString("name", userDetails.getString("name")).apply()
-        sharedPreferences.edit().putString("email", userDetails.getString("email")).apply()
-        sharedPreferences.edit().putString("mobile_number", userDetails.getString("mobile_number"))
-            .apply()
-        sharedPreferences.edit().putString("address", userDetails.getString("address")).apply()
     }
 }
