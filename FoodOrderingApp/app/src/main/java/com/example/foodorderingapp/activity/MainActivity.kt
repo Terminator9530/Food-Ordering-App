@@ -20,6 +20,7 @@ import com.example.foodorderingapp.R
 import com.example.foodorderingapp.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_header.view.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
@@ -50,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        val headerView = navigationView.getHeaderView(0)
+        headerView.txtName.text = sharedPreferences.getString("name", "John Doe")
+        headerView.txtMobileNumber.text =
+            "+91 - " + sharedPreferences.getString("mobile_number", "9580374184")
 
         navigationView.setNavigationItemSelectedListener {
             if (previousMenuItem != null) {
