@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appTheme"
     tools:context=".fragment.ProfileFragment">
 
     <TextView
@@ -12,5 +13,74 @@
         android:padding="10dp"
         android:text="Profile Fragment"
         android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txtProfile"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:src="@drawable/people" />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_layout"
+            android:padding="10dp"
+            android:text="John Doe"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/txtMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_layout"
+            android:padding="10dp"
+            android:text="+91 - 9580374184"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_layout"
+            android:padding="10dp"
+            android:text="johndoe@gmail.com"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/txtDeliveryAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_layout"
+            android:padding="10dp"
+            android:text="Gurugram"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 
 </RelativeLayout>

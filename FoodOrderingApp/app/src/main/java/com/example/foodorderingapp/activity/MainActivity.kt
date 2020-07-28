@@ -1,5 +1,7 @@
 package com.example.foodorderingapp.activity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
@@ -20,9 +22,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var toolBar: androidx.appcompat.widget.Toolbar
     lateinit var frameLayout: FrameLayout
     lateinit var navigationView: NavigationView
+    lateinit var sharedPreferences: SharedPreferences
     var previousMenuItem: MenuItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.userDetails), Context.MODE_PRIVATE)
         setContentView(R.layout.activity_main)
 
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -54,10 +59,15 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Clicked on Home", Toast.LENGTH_SHORT).show()
                 }
                 R.id.profile -> {
+                    val name = sharedPreferences.getString("name", "John Doe")
+                    val mobileNumber =
+                        sharedPreferences.getString("mobile_number", "+91 - 9580374184")
+                    val email = sharedPreferences.getString("email", "johndoe@gmail.com")
+                    val address = sharedPreferences.getString("deliveryAddress", "Gurugram")
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.frame,
-                            ProfileFragment()
+                            ProfileFragment(name, mobileNumber, email, address)
                         )
                         .addToBackStack("Profile")
                         .commit()

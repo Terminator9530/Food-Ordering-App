@@ -47,7 +47,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
                 android:padding="8dp"
-                android:text="Rs. 299"
+                android:text="₹ 299/person"
                 android:textColor="#357a38"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
-                android:drawableLeft="@drawable/ic_favourite"
+                android:drawableLeft="@drawable/ic_heart_outline"
                 android:drawablePadding="4dp"
                 android:padding="8dp" />
 

@@ -43,7 +43,8 @@ class HomeRecyclerAdapter(val context: Context, val itemList: ArrayList<Restaura
     ) {
         val restaurant = itemList[position]
         holder.txtRestaurantName.text = restaurant.restaurantName
-        holder.txtRestaurantCostPerPerson.text = restaurant.restaurantCostPerPerson
+        holder.txtRestaurantCostPerPerson.text =
+            "₹ " + restaurant.restaurantCostPerPerson + "/person"
         holder.txtRestaurantRating.text = restaurant.restaurantRating
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.app_logo)
             .into(holder.imgRestaurant)
