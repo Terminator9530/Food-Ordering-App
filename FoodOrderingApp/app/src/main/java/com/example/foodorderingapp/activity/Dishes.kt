@@ -29,6 +29,7 @@ class Dishes : AppCompatActivity() {
     var restaurentName: String? = "100"
     lateinit var toolbar: Toolbar
     var dishInfoList = arrayListOf<Dish>()
+    var check = arrayListOf<Boolean>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dishes)
@@ -71,9 +72,10 @@ class Dishes : AppCompatActivity() {
                                 dishJsonObject.getString("restaurant_id")
                             )
                             dishInfoList.add(dishObject)
+                            check.add(true)
                         }
                         recyclerAdapter =
-                            DishesRecyclerAdapter(this@Dishes, dishInfoList)
+                            DishesRecyclerAdapter(this@Dishes, dishInfoList, check)
                         recyclerHome.adapter = recyclerAdapter
                         recyclerHome.layoutManager = layoutManager
                     } else {
@@ -105,9 +107,9 @@ class Dishes : AppCompatActivity() {
             }
 
         queue.add(jsonObjectRequest)
-        recyclerAdapter =
-            DishesRecyclerAdapter(this@Dishes, dishInfoList)
-        recyclerHome.adapter = recyclerAdapter
-        recyclerHome.layoutManager = layoutManager
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
