@@ -29,13 +29,31 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerDish"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerDish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="10dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <Button
+                android:id="@+id/btnCheckOut"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="@color/appTheme"
+                android:text="Proceed To Cart"
+                android:textAlignment="center"
+                android:textColor="#ffffff" />
+
+        </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

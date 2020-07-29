@@ -20,5 +20,5 @@ interface DishDao {
     fun getDishById(dishId: String): DishEntity
 
     @Query("DELETE FROM dishes")
-    fun emptyDish()
+    fun deleteAllDish()
 }

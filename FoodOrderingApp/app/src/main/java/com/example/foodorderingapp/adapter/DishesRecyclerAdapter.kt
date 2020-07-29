@@ -8,21 +8,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.database.DishDatabase
 import com.example.foodorderingapp.database.DishEntity
-import com.example.foodorderingapp.database.RestaurantDatabase
-import com.example.foodorderingapp.database.RestaurantEntity
 import com.example.foodorderingapp.model.Dish
-import com.example.foodorderingapp.model.FAQ
 
 class DishesRecyclerAdapter(
     val context: Context,
     val itemList: ArrayList<Dish>,
-    var check: ArrayList<Boolean>
+    val changeView: () -> Any
 ) :
     RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder>() {
     class DishesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -91,6 +87,7 @@ class DishesRecyclerAdapter(
                     Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT).show()
                 }
             }
+            changeView()
         }
     }
 
@@ -123,12 +120,6 @@ class DishesRecyclerAdapter(
                 3 -> {
                     // remove Restaurant from fav
                     db.dishDao().deleteDish(dishEntity)
-                    db.close()
-                    return true
-                }
-                4 -> {
-                    // empty data
-                    db.dishDao().emptyDish()
                     db.close()
                     return true
                 }
