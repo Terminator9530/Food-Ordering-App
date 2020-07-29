@@ -62,8 +62,8 @@ class HomeRecyclerAdapter(
         val restaurantEntity = RestaurantEntity(
             restaurant.restaurantId.toInt(),
             restaurant.restaurantName,
-            restaurant.restaurantRating,
             restaurant.restaurantCostPerPerson,
+            restaurant.restaurantRating,
             restaurant.restaurantImage
         )
 

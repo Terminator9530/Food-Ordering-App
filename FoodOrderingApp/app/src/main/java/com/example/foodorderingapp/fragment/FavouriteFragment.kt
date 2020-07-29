@@ -40,8 +40,8 @@ class FavouriteFragment : Fragment() {
             val restaurantObject = Restaurant(
                 i.restaurant_id.toString(),
                 i.restaurantName,
-                i.restaurantRating,
                 i.restaurantPrice,
+                i.restaurantRating,
                 i.restaurantImage
             )
             restaurantInfoList.add(restaurantObject)

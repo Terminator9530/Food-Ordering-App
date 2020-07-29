@@ -89,8 +89,8 @@ class HomeFragment : Fragment() {
                             val restaurantObject = Restaurant(
                                 restaurantJsonObject.getString("id"),
                                 restaurantJsonObject.getString("name"),
-                                restaurantJsonObject.getString("rating"),
                                 restaurantJsonObject.getString("cost_for_one"),
+                                restaurantJsonObject.getString("rating"),
                                 restaurantJsonObject.getString("image_url")
                             )
                             restaurantInfoList.add(restaurantObject)
@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
             val dialog = AlertDialog.Builder(activity as Context)
             dialog.setTitle("Sort By ?")
             val listItems = arrayOf("Cost(Low to High)", "Cost(High to Low)", "Rating")
-            dialog.setSingleChoiceItems(listItems, -1) { dialogInterface, i ->
+            dialog.setSingleChoiceItems(listItems, itemSelected) { dialogInterface, i ->
                 itemSelected = i
             }
             dialog.setPositiveButton("Yes") { text, listener ->
