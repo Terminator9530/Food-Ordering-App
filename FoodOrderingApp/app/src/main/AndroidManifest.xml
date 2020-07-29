@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/food_order_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Cart"></activity>
+        <activity android:name=".activity.OrderPlaced"></activity>
+        <activity android:name=".activity.Cart" />
         <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

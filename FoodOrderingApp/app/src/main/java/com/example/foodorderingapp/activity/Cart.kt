@@ -1,9 +1,11 @@
 package com.example.foodorderingapp.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +26,20 @@ class Cart : AppCompatActivity() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: CartRecyclerAdapter
     lateinit var toolbar: Toolbar
+    lateinit var btnPlaceOrder: Button
+    var billAmount = 0
     var dbDishList = listOf<DishEntity>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         toolbar = findViewById(R.id.toolbar)
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder)
+        btnPlaceOrder.setOnClickListener {
+            Toast.makeText(this@Cart, "Order Placed", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@Cart, OrderPlaced::class.java)
+            startActivity(intent)
+            finish()
+        }
         setSupportActionBar(toolbar)
         supportActionBar?.title = "My Cart"
         recyclerCart = findViewById(R.id.recyclerCartItems)
@@ -54,7 +65,9 @@ class Cart : AppCompatActivity() {
                 i.restaurantId.toString()
             )
             dishInfoList.add(dishObject)
+            billAmount += i.restaurantPrice.toInt()
         }
+        btnPlaceOrder.text = "Place Order : Rs. " + billAmount.toString()
         recyclerAdapter =
             CartRecyclerAdapter(this@Cart, dishInfoList)
         recyclerCart.adapter = recyclerAdapter
