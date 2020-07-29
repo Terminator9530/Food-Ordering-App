@@ -11,9 +11,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.foodorderingapp.R
+import com.example.foodorderingapp.activity.Dishes
+import com.example.foodorderingapp.activity.Login
 import com.example.foodorderingapp.database.RestaurantDatabase
 import com.example.foodorderingapp.database.RestaurantEntity
 import com.example.foodorderingapp.model.Restaurant
@@ -58,6 +61,13 @@ class HomeRecyclerAdapter(
         holder.txtRestaurantRating.text = restaurant.restaurantRating
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.app_logo)
             .into(holder.imgRestaurant)
+
+        holder.llContent.setOnClickListener {
+            val intent = Intent(context, Dishes::class.java)
+            intent.putExtra("restaurant_id", restaurant.restaurantId)
+            intent.putExtra("restaurant_name", restaurant.restaurantName)
+            context.startActivity(intent)
+        }
 
         val restaurantEntity = RestaurantEntity(
             restaurant.restaurantId.toInt(),
