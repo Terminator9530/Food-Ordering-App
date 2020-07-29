@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/food_order_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.Cart"></activity>
         <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Login"></activity>
-        <activity android:name=".activity.Register"></activity>
-        <activity android:name=".activity.ForgotPassword"></activity>
-        <activity android:name=".activity.OTP"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.Dishes"></activity>
+        <activity android:name=".activity.Login" />
+        <activity android:name=".activity.Register" />
+        <activity android:name=".activity.ForgotPassword" />
+        <activity android:name=".activity.OTP" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.Dishes" />
     </application>
 
 </manifest>

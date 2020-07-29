@@ -1,13 +1,18 @@
 package com.example.foodorderingapp.activity
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -36,6 +41,13 @@ class Dishes : AppCompatActivity() {
         setContentView(R.layout.activity_dishes)
         btnCheckOut = findViewById(R.id.btnCheckOut)
         btnCheckOut.visibility = View.GONE
+        btnCheckOut.setOnClickListener {
+            println("Place Order")
+            val intent = Intent(this@Dishes, Cart::class.java)
+            intent.putExtra("restaurant_id", restaurentId)
+            intent.putExtra("restaurant_name", restaurentName)
+            startActivity(intent)
+        }
         if (intent != null) {
             restaurentId = intent.getStringExtra("restaurant_id")
             restaurentName = intent.getStringExtra("restaurant_name")
@@ -139,8 +151,17 @@ class Dishes : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        println("Back Button Pressed")
-        EmptyDishes(this@Dishes).execute().get()
-        super.onBackPressed()
+        val dialog = AlertDialog.Builder(this@Dishes)
+        dialog.setTitle("Confirmation")
+        dialog.setMessage("Going Back will reset cart items. Do you still want to proceed ?")
+        dialog.setPositiveButton("Yes") { text, listener ->
+            EmptyDishes(this@Dishes).execute().get()
+            super.onBackPressed()
+        }
+        dialog.setNegativeButton("No") { text, listener ->
+
+        }
+        dialog.create()
+        dialog.show()
     }
 }
