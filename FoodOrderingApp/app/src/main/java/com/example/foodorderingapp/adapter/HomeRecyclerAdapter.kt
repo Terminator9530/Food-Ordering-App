@@ -2,21 +2,26 @@ package com.example.foodorderingapp.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.foodorderingapp.R
+import com.example.foodorderingapp.database.RestaurantDatabase
+import com.example.foodorderingapp.database.RestaurantEntity
 import com.example.foodorderingapp.model.Restaurant
 import com.squareup.picasso.Picasso
 
 class HomeRecyclerAdapter(
     val context: Context,
-    val itemList: ArrayList<Restaurant>,
-    var check: ArrayList<Boolean>
+    val itemList: ArrayList<Restaurant>
 ) :
     RecyclerView.Adapter<HomeRecyclerAdapter.HomeViewHolder>() {
     class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -53,24 +58,103 @@ class HomeRecyclerAdapter(
         holder.txtRestaurantRating.text = restaurant.restaurantRating
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.app_logo)
             .into(holder.imgRestaurant)
+
+        val restaurantEntity = RestaurantEntity(
+            restaurant.restaurantId.toInt(),
+            restaurant.restaurantName,
+            restaurant.restaurantRating,
+            restaurant.restaurantCostPerPerson,
+            restaurant.restaurantImage
+        )
+
+        val checkFav = DBAsyncTask(context, restaurantEntity, 1).execute()
+        val isFav = checkFav.get()
+        if (isFav) {
+            holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_heart_filled,
+                0,
+                0,
+                0
+            );
+        } else {
+            holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_heart_outline,
+                0,
+                0,
+                0
+            );
+        }
+
         holder.icHeart.setOnClickListener {
-            if (check[position]) {
-                holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_heart_outline,
-                    0,
-                    0,
-                    0
-                );
-                check[position] = false
+            if (!DBAsyncTask(context, restaurantEntity, 1).execute().get()) {
+                val async = DBAsyncTask(context, restaurantEntity, 2).execute()
+                val result = async.get()
+                if (result) {
+                    Toast.makeText(context, "Restaurant Added to Favourites", Toast.LENGTH_SHORT)
+                        .show()
+                    holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_heart_filled,
+                        0,
+                        0,
+                        0
+                    );
+                } else {
+                    Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_heart_filled,
-                    0,
-                    0,
-                    0
-                );
-                check[position] = true
+                val async = DBAsyncTask(context, restaurantEntity, 3).execute()
+                val result = async.get()
+                if (result) {
+                    Toast.makeText(context, "Restaurant Removed to Favourites", Toast.LENGTH_SHORT)
+                        .show()
+                    holder.icHeart.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_heart_outline,
+                        0,
+                        0,
+                        0
+                    );
+                } else {
+                    Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+
+    }
+
+    class DBAsyncTask(val context: Context, val restaurantEntity: RestaurantEntity, val mode: Int) :
+        AsyncTask<Void, Void, Boolean>() {
+        /*
+            Mode 1 ->check db if Restaurant is fav or not
+            Mode 2 ->save Restaurant into db as fav
+            Mode 3 ->remove the fav Restaurant
+        */
+
+        val db =
+            Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurant-db").build()
+
+        override fun doInBackground(vararg p0: Void?): Boolean {
+            when (mode) {
+                1 -> {
+                    // check whether Restaurant is fav
+                    val book: RestaurantEntity? = db.restaurantDao()
+                        .getRestaurantById(restaurantEntity.restaurant_id.toString())
+                    db.close()
+                    return book != null
+                }
+                2 -> {
+                    // add Restaurant to fav
+                    db.restaurantDao().insertRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+                3 -> {
+                    // remove Restaurant from fav
+                    db.restaurantDao().deleteRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return false
         }
 
     }

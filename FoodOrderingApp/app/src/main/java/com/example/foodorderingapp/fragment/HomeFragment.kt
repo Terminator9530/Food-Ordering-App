@@ -60,12 +60,8 @@ class HomeFragment : Fragment() {
                             )
                             restaurantInfoList.add(restaurantObject)
                         }
-                        var check = arrayListOf<Boolean>()
-                        for (i in 0 until dataArray.length()) {
-                            check.add(false)
-                        }
                         recyclerAdapter =
-                            HomeRecyclerAdapter(activity as Context, restaurantInfoList, check)
+                            HomeRecyclerAdapter(activity as Context, restaurantInfoList)
                         recyclerHome.adapter = recyclerAdapter
                         recyclerHome.layoutManager = layoutManager
                     } else {
