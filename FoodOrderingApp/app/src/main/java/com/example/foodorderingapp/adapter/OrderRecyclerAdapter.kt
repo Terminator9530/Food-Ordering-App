@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.database.DishEntity
@@ -19,6 +21,7 @@ class OrderRecyclerAdapter(
     class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtName: TextView = view.findViewById(R.id.txtName)
         val txtDesc: TextView = view.findViewById(R.id.txtDesc)
+        val llContent: LinearLayout = view.findViewById(R.id.llContent)
     }
 
     override fun onCreateViewHolder(
@@ -42,5 +45,11 @@ class OrderRecyclerAdapter(
         println(dish)
         holder.txtName.text = dish.column1
         holder.txtDesc.text = dish.column2
+        if (dish.column2.contains("-", ignoreCase = true)) {
+            val favColor = ContextCompat.getColor(context, R.color.appTheme)
+            val textColor = ContextCompat.getColor(context, R.color.remove)
+            holder.llContent.setBackgroundColor(favColor)
+            holder.txtName.setTextColor(textColor)
+        }
     }
 }

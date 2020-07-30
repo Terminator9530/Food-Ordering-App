@@ -36,7 +36,14 @@ class OTP : AppCompatActivity() {
         etPassword = findViewById(R.id.etPassword)
         etConfirmPassword = findViewById(R.id.etConfirmPassword)
         btnSubmit = findViewById(R.id.btnSubmit)
+        val dialog = AlertDialog.Builder(this@OTP)
+        dialog.setTitle("Information")
+        dialog.setMessage("Please check email for OTP")
+        dialog.setPositiveButton("Ok") { text, listener ->
 
+        }
+        dialog.create()
+        dialog.show()
         btnSubmit.setOnClickListener {
             val password = etPassword.text.toString()
             val confirmPassword = etConfirmPassword.text.toString()
