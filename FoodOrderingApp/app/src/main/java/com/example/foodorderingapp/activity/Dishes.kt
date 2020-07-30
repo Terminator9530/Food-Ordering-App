@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -35,12 +37,17 @@ class Dishes : AppCompatActivity() {
     var restaurentName: String? = "100"
     lateinit var toolbar: Toolbar
     lateinit var btnCheckOut: Button
+    lateinit var progressLayout: RelativeLayout
+    lateinit var progressBar: ProgressBar
     var dishInfoList = arrayListOf<Dish>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dishes)
         btnCheckOut = findViewById(R.id.btnCheckOut)
         btnCheckOut.visibility = View.GONE
+        progressLayout = findViewById(R.id.progressLayout)
+        progressBar = findViewById(R.id.progressBar)
+        progressLayout.visibility = View.VISIBLE
         btnCheckOut.setOnClickListener {
             println("Place Order")
             val intent = Intent(this@Dishes, Cart::class.java)
@@ -88,6 +95,7 @@ class Dishes : AppCompatActivity() {
                             )
                             dishInfoList.add(dishObject)
                         }
+                        progressLayout.visibility = View.GONE
                         recyclerAdapter =
                             DishesRecyclerAdapter(this@Dishes, dishInfoList, { changeView() })
                         recyclerHome.adapter = recyclerAdapter

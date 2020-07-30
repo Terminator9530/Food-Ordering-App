@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +30,8 @@ class OrderFragment : Fragment() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: OrderRecyclerAdapter
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var progressLayout: RelativeLayout
+    lateinit var progressBar: ProgressBar
     var dishInfoList = arrayListOf<Order>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +46,9 @@ class OrderFragment : Fragment() {
             )
         recyclerPerItem = view.findViewById(R.id.recyclerPerItem)
         layoutManager = LinearLayoutManager(activity)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        progressBar = view.findViewById(R.id.progressBar)
+        progressLayout.visibility = View.VISIBLE
         val queue = Volley.newRequestQueue(activity as Context)
         val userId = sharedPreferences.getString("user_id", "0")
         val url = "http://13.235.250.119/v2/orders/fetch_result/$userId"
@@ -70,7 +77,7 @@ class OrderFragment : Fragment() {
                                 )
                                 dishInfoList.add(dishObject)
                             }
-                            println(dishInfoList)
+                            progressLayout.visibility = View.GONE
                             recyclerAdapter =
                                 OrderRecyclerAdapter(activity as Context, dishInfoList)
                             recyclerPerItem.adapter = recyclerAdapter

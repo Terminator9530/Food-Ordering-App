@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +28,8 @@ class HomeFragment : Fragment() {
     lateinit var recyclerHome: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: HomeRecyclerAdapter
+    lateinit var progressLayout: RelativeLayout
+    lateinit var progressBar: ProgressBar
     var restaurantInfoList = arrayListOf<Restaurant>()
     var itemSelected: Int = -1
 
@@ -68,6 +72,9 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         recyclerHome = view.findViewById(R.id.recyclerHome)
         layoutManager = LinearLayoutManager(activity)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        progressBar = view.findViewById(R.id.progressBar)
+        progressLayout.visibility = View.VISIBLE
 
 
         // post request
@@ -95,6 +102,7 @@ class HomeFragment : Fragment() {
                             )
                             restaurantInfoList.add(restaurantObject)
                         }
+                        progressLayout.visibility = View.GONE
                         recyclerAdapter =
                             HomeRecyclerAdapter(activity as Context, restaurantInfoList)
                         recyclerHome.adapter = recyclerAdapter
