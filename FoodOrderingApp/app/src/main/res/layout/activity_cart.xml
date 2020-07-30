@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Dishes">
+    tools:context=".activity.Cart">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -35,7 +35,7 @@
             android:layout_marginTop="56dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerDish"
+                android:id="@+id/recyclerCartItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -43,13 +43,13 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <Button
-                android:id="@+id/btnCheckOut"
+                android:id="@+id/btnPlaceOrder"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center"
                 android:background="@color/appTheme"
-                android:text="Proceed To Cart"
+                android:text="Place Order(Total : Rs. 540)"
                 android:textAlignment="center"
                 android:textColor="#ffffff" />
 
