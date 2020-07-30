@@ -22,11 +22,14 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.bookreader.utils.ConnectionManager
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapter.DishesRecyclerAdapter
+import com.example.foodorderingapp.adapter.HomeRecyclerAdapter
 import com.example.foodorderingapp.database.DishDatabase
 import com.example.foodorderingapp.database.DishEntity
 import com.example.foodorderingapp.model.Dish
+import com.example.foodorderingapp.model.Restaurant
 import org.json.JSONException
 
 class Dishes : AppCompatActivity() {
@@ -71,64 +74,82 @@ class Dishes : AppCompatActivity() {
         supportActionBar?.title = restaurentName
         recyclerHome = findViewById(R.id.recyclerDish)
         layoutManager = LinearLayoutManager(this@Dishes)
-        // post request
 
-        val queue = Volley.newRequestQueue(this@Dishes)
+        if (ConnectionManager().checkConnectivity(this@Dishes)) {
+            // post request
 
-        val url = "http://13.235.250.119/v2/restaurants/fetch_result/$restaurentId"
-        val jsonObjectRequest =
-            object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
-                // handle request
-                println("Response is $it")
-                try {
-                    val data = it.getJSONObject("data")
-                    val success = data.getBoolean("success")
-                    if (success) {
-                        val dataArray = data.getJSONArray("data")
-                        for (i in 0 until dataArray.length()) {
-                            val dishJsonObject = dataArray.getJSONObject(i)
-                            val dishObject = Dish(
-                                dishJsonObject.getString("id"),
-                                dishJsonObject.getString("name"),
-                                dishJsonObject.getString("cost_for_one"),
-                                dishJsonObject.getString("restaurant_id")
-                            )
-                            dishInfoList.add(dishObject)
+            val queue = Volley.newRequestQueue(this@Dishes)
+
+            val url = "http://13.235.250.119/v2/restaurants/fetch_result/$restaurentId"
+            val jsonObjectRequest =
+                object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+                    // handle request
+                    println("Response is $it")
+                    try {
+                        val data = it.getJSONObject("data")
+                        val success = data.getBoolean("success")
+                        if (success) {
+                            val dataArray = data.getJSONArray("data")
+                            for (i in 0 until dataArray.length()) {
+                                val dishJsonObject = dataArray.getJSONObject(i)
+                                val dishObject = Dish(
+                                    dishJsonObject.getString("id"),
+                                    dishJsonObject.getString("name"),
+                                    dishJsonObject.getString("cost_for_one"),
+                                    dishJsonObject.getString("restaurant_id")
+                                )
+                                dishInfoList.add(dishObject)
+                            }
+                            progressLayout.visibility = View.GONE
+                            recyclerAdapter =
+                                DishesRecyclerAdapter(this@Dishes, dishInfoList, { changeView() })
+                            recyclerHome.adapter = recyclerAdapter
+                            recyclerHome.layoutManager = layoutManager
+                        } else {
+                            Toast.makeText(
+                                this@Dishes,
+                                "Some Error occured",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        progressLayout.visibility = View.GONE
-                        recyclerAdapter =
-                            DishesRecyclerAdapter(this@Dishes, dishInfoList, { changeView() })
-                        recyclerHome.adapter = recyclerAdapter
-                        recyclerHome.layoutManager = layoutManager
-                    } else {
+                    } catch (e: JSONException) {
                         Toast.makeText(
                             this@Dishes,
-                            "Some Error occured",
+                            "Some unexpected error occured",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                } catch (e: JSONException) {
-                    Toast.makeText(
-                        this@Dishes,
-                        "Some unexpected error occured",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }, Response.ErrorListener {
+                    // handle error
+                    println("Error is $it")
+                    Toast.makeText(this@Dishes, "volley error occured", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Content-type"] = "application/json"
+                        headers["token"] = "590d13b4181c7b"
+                        return headers
+                    }
                 }
-            }, Response.ErrorListener {
-                // handle error
-                println("Error is $it")
-                Toast.makeText(this@Dishes, "volley error occured", Toast.LENGTH_SHORT)
-                    .show()
-            }) {
-                override fun getHeaders(): MutableMap<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers["Content-type"] = "application/json"
-                    headers["token"] = "590d13b4181c7b"
-                    return headers
-                }
-            }
 
-        queue.add(jsonObjectRequest)
+            queue.add(jsonObjectRequest)
+        } else {
+            println("No Internet")
+            val dialog = AlertDialog.Builder(this@Dishes)
+            dialog.setTitle("Error")
+            dialog.setMessage("Internet Connection is not Found")
+            dialog.setPositiveButton("Open Settings") { text, listener ->
+                val settingIntent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+                startActivity(settingIntent)
+                finish()
+            }
+            dialog.setNegativeButton("Exit") { text, listener ->
+                ActivityCompat.finishAffinity(this@Dishes)
+            }
+            dialog.create()
+            dialog.show()
+        }
     }
 
     fun changeView() {
