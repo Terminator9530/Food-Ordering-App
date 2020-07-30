@@ -25,7 +25,7 @@
                 android:background="@color/appTheme"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,8 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:padding="10dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:padding="10dp" />
 
             <Button
                 android:id="@+id/btnCheckOut"
@@ -56,6 +55,21 @@
         </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="#fff">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

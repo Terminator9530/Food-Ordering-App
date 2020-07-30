@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,8 @@ class FavouriteFragment : Fragment() {
     lateinit var recyclerHome: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: HomeRecyclerAdapter
+    lateinit var progressLayout: RelativeLayout
+    lateinit var progressBar: ProgressBar
     var dbRestaurantList = listOf<RestaurantEntity>()
 
     override fun onCreateView(
@@ -33,6 +37,9 @@ class FavouriteFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerHome = view.findViewById(R.id.recyclerHome)
         layoutManager = LinearLayoutManager(activity)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        progressBar = view.findViewById(R.id.progressBar)
+        progressLayout.visibility = View.VISIBLE
         dbRestaurantList = RetrieveFavourites(activity as Context).execute().get()
         var restaurantInfoList = arrayListOf<Restaurant>()
         for (i in dbRestaurantList) {
@@ -48,6 +55,7 @@ class FavouriteFragment : Fragment() {
         }
 
         if (dbRestaurantList != null && activity != null) {
+            progressLayout.visibility = View.GONE
             recyclerAdapter = HomeRecyclerAdapter(activity as Context, restaurantInfoList)
             recyclerHome.adapter = recyclerAdapter
             recyclerHome.layoutManager = layoutManager

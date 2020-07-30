@@ -5,20 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".fragment.OrderFragment">
 
-    <TextView
-        android:id="@+id/txtOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Orders Fragment"
-        android:textSize="20sp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPerItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtOrder"
         android:layout_margin="5dp"
         android:padding="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -29,6 +29,8 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:text="-"
+                android:textColor="@color/appTheme"
+                android:textSize="30sp"
                 android:textAlignment="center" />
 
         </LinearLayout>

@@ -6,19 +6,10 @@
     android:background="@color/appTheme"
     tools:context=".fragment.ProfileFragment">
 
-    <TextView
-        android:id="@+id/txtProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Profile Fragment"
-        android:textSize="20sp" />
-
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/txtProfile"
         android:orientation="vertical">
 
         <ImageView

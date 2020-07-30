@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="120dp"
     android:layout_margin="6dp"
     android:background="#ffffff"
     app:cardCornerRadius="4dp">
@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="#ffffff"
         android:orientation="horizontal"
         android:weightSum="6">
@@ -19,15 +19,15 @@
             android:id="@+id/imgRestaurant"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.7"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3.3">
+            android:layout_weight="3.5">
 
             <TextView
                 android:id="@+id/txtRestaurantName"
@@ -56,7 +56,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2">
+            android:layout_weight="0.8">
 
             <TextView
                 android:id="@+id/txtRestaurantRating"
