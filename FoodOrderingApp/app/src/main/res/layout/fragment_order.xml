@@ -13,4 +13,12 @@
         android:text="Orders Fragment"
         android:textSize="20sp" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPerItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOrder"
+        android:layout_margin="5dp"
+        android:padding="10dp" />
+
 </RelativeLayout>
