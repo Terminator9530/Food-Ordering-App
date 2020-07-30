@@ -21,6 +21,7 @@ import com.example.foodorderingapp.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
@@ -66,7 +67,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> {
                     openHome()
-                    Toast.makeText(this@MainActivity, "Clicked on Home", Toast.LENGTH_SHORT).show()
                 }
                 R.id.profile -> {
                     val name = sharedPreferences.getString("name", "John Doe")
@@ -83,8 +83,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     drawerLayout.closeDrawers()
                     setUpToolbar("My Profile")
-                    Toast.makeText(this@MainActivity, "Clicked on Profile", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 R.id.favourite -> {
                     supportFragmentManager.beginTransaction()
@@ -96,11 +94,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     drawerLayout.closeDrawers()
                     setUpToolbar("Favourite Restaurants")
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Clicked on Favourite Restaurant",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
                 R.id.history -> {
                     supportFragmentManager.beginTransaction()
@@ -112,11 +105,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     drawerLayout.closeDrawers()
                     setUpToolbar("My Previous Orders")
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Clicked on Order History",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
                 R.id.faq -> {
                     supportFragmentManager.beginTransaction()
@@ -128,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     drawerLayout.closeDrawers()
                     setUpToolbar("Frequently Asked Questions")
-                    Toast.makeText(this@MainActivity, "Clicked on FAQ's", Toast.LENGTH_SHORT).show()
                 }
                 R.id.logout -> {
                     drawerLayout.closeDrawers()
@@ -136,6 +123,7 @@ class MainActivity : AppCompatActivity() {
                     dialog.setTitle("Alert")
                     dialog.setMessage("Are You Sure You Want To LogOut ?")
                     dialog.setPositiveButton("Yes") { text, listener ->
+                        clearSharedPreferences()
                         val intent = Intent(this@MainActivity, Login::class.java)
                         startActivity(intent)
                         finish()
@@ -145,12 +133,20 @@ class MainActivity : AppCompatActivity() {
                     }
                     dialog.create()
                     dialog.show()
-                    Toast.makeText(this@MainActivity, "Clicked on LogOut", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
             return@setNavigationItemSelectedListener true
         }
+    }
+
+    fun clearSharedPreferences() {
+        sharedPreferences.edit().putString("user_id", null).apply()
+        sharedPreferences.edit().putString("name", null).apply()
+        sharedPreferences.edit().putString("email", null).apply()
+        sharedPreferences.edit().putString("mobile_number", null)
+            .apply()
+        sharedPreferences.edit().putString("address", null).apply()
+        sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
     }
 
     fun setUpToolbar(title: String) {

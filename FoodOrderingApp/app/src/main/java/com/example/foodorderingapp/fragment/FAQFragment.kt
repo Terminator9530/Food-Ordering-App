@@ -42,6 +42,18 @@ class FAQFragment : Fragment() {
             FAQ(
                 "How many plates can we order for one dish ?",
                 "You can only add one plate per item."
+            ),
+            FAQ(
+                "Can I get both veg and non veg food ?",
+                "Yes you can have both food"
+            ),
+            FAQ(
+                "Is any discount offer available ?",
+                "No We Dont't provide discounts"
+            ),
+            FAQ(
+                "What is the quality of food offered ?",
+                "Very Good quality of food is offered"
             )
         )
         recyclerAdapter =

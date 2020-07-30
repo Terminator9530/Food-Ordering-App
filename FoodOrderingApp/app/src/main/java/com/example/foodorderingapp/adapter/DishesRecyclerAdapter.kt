@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.foodorderingapp.R
@@ -61,8 +62,12 @@ class DishesRecyclerAdapter(
         val isFav = checkFav.get()
         if (isFav) {
             holder.btnAddOrRemove.text = "Remove"
+            val favColor = ContextCompat.getColor(context, R.color.remove)
+            holder.btnAddOrRemove.setBackgroundColor(favColor)
         } else {
             holder.btnAddOrRemove.text = "Add"
+            val favColor = ContextCompat.getColor(context, R.color.appTheme)
+            holder.btnAddOrRemove.setBackgroundColor(favColor)
         }
 
         holder.btnAddOrRemove.setOnClickListener {
@@ -73,6 +78,8 @@ class DishesRecyclerAdapter(
                     Toast.makeText(context, "Dish Added", Toast.LENGTH_SHORT)
                         .show()
                     holder.btnAddOrRemove.text = "Remove"
+                    val favColor = ContextCompat.getColor(context, R.color.remove)
+                    holder.btnAddOrRemove.setBackgroundColor(favColor)
                 } else {
                     Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT).show()
                 }
@@ -83,6 +90,8 @@ class DishesRecyclerAdapter(
                     Toast.makeText(context, "Dish Removed", Toast.LENGTH_SHORT)
                         .show()
                     holder.btnAddOrRemove.text = "Add"
+                    val favColor = ContextCompat.getColor(context, R.color.appTheme)
+                    holder.btnAddOrRemove.setBackgroundColor(favColor)
                 } else {
                     Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT).show()
                 }

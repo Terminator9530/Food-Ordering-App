@@ -74,11 +74,6 @@ class Cart : AppCompatActivity() {
                     try {
                         val success = data.getBoolean("success")
                         if (success) {
-                            Toast.makeText(
-                                this@Cart,
-                                "Order Placed",
-                                Toast.LENGTH_SHORT
-                            ).show()
                             val intent = Intent(this@Cart, OrderPlaced::class.java)
                             startActivity(intent)
                             finish()

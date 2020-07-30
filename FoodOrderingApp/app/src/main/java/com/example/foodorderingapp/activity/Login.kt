@@ -23,6 +23,7 @@ class Login : AppCompatActivity() {
     lateinit var etMobileNumber: EditText
     lateinit var etPassword: EditText
     lateinit var sharedPreferences: SharedPreferences
+    var isLoggedIn = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences =
@@ -42,6 +43,13 @@ class Login : AppCompatActivity() {
         forgotPassword.setOnClickListener {
             val intent = Intent(this@Login, ForgotPassword::class.java)
             startActivity(intent)
+        }
+
+        isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            val intent = Intent(this@Login, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         btnLogin.setOnClickListener {
@@ -108,5 +116,6 @@ class Login : AppCompatActivity() {
         sharedPreferences.edit().putString("mobile_number", userDetails.getString("mobile_number"))
             .apply()
         sharedPreferences.edit().putString("address", userDetails.getString("address")).apply()
+        sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
     }
 }
