@@ -1,5 +1,5 @@
 # Food-Ordering-App
-An app for ordering food
+An demo app for ordering food
 
 <b>Login Page</b>
 
